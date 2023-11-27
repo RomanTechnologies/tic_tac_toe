@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import '../themes/theme_data.dart';
 import '../../viewmodels/game_viewmodel.dart';
+import '../services/game_service.dart';
+import '../services/navigation_service.dart';
 
 class GamePlayView extends StatelessWidget {
-  GamePlayView({Key? required this.viewModel}) : super(key: key);
+  final GameViewModel _viewModel;
+  final GameService _gameService;
+  final NavigationService _navigationService;
 
-  final GameViewModel?viewModel;
+  GamePlayView({Key? required this.viewModel, required GameService gameService, required NavigationService navigationService})
+      : _viewModel = viewModel, _gameService = gameService, _navigationService = navigationService,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +19,12 @@ class GamePlayView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Game Play'),
       ),
-      body: Center(
-        child: Text('Game play view content here'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+                        Text('Play the game!'),
+                        // Implement game logic and ui components
+                    ],
       ),
     );
   }
