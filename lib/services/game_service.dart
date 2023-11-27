@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import '../models/game_model.dart';
 import '../utils/game_logic.dart';
+import 'package:firebase_database/firebase_database.dart';
 
+// Service for handling game actions and interactions
 class GameService {
-  // This class will handle all game-related actions and interactions.
-  static void handlePlayerMove(GameModel gameModel) {
-    // Implement logic for player moves.
+  final FirebaseDatabase _db = FirebaseDatabase.instance;
+
+  // Updates game state based on player actions
+  void updateGameState(GameModel gameModel) async {
+    var ref = _db.reference('games').document(gameModel.id);
+    await ref.setData(gameModel.toJson());
   }
 
-  static void handleGameState(GameModel gameModel) {
-    // Update game state based on player actions.
+  // Handle player moves and update the game state
+  void handlePlayerMove(GameModel gameModel, String playerMove) async {
+    var newState = GameLogic.calculateGameState(gameModel, playerMove);
+    await updateGameState(newState);
   }
 }
